@@ -6,3 +6,6 @@ class Employee(Person):
 		super().__init__(name, gender, age)
 		self.job = job
 		self.salary = salary
+
+	def __str__(self):
+		return "Name: {}, gender: {}, age: {}, job: {}, salary: {}".format(self.name, self.gender, self.age, self.job, self.salary)

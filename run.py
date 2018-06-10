@@ -7,10 +7,10 @@ from bankmodelproject import Account, Bank, Customer, Employee, Person
 
 
 if __name__ == "__main__":
-	def create_bank(name, balance, customers):
-		return Bank(name, balance, customers)
+	def create_bank(name, balance, customers, employees):
+		return Bank(name, balance, customers, employees)
 
-	bank = create_bank("Byte Bank", 0, [])
+	bank = create_bank("Byte Bank", 0, [], [])
 	print("Welcome to {}!".format(bank.name))
 	stop = False
 
@@ -24,16 +24,16 @@ if __name__ == "__main__":
 		cmd = input()
 		if cmd == "1":
 			print("Creating your new account...")
-			time.sleep(2)
+			time.sleep(1)
 			print()
 		elif cmd == "2":
 			print("Logging you in ...")
-			time.sleep(2)
+			time.sleep(1)
 			print()
 		elif cmd == "3":
 			stop = True
 			print("Thanks very much, have a nice day!")
 		else:
 			print("Sorry, I cannot do that.")
-			time.sleep(2)
+			time.sleep(1)
 			print()

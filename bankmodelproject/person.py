@@ -3,3 +3,6 @@ class Person:
 		self.name = name
 		self.gender = gender
 		self.age = age
+
+	def __str__(self):
+		return "Name: {}, gender: {}, age: {}".format(self.name, self.gender, self.age)
