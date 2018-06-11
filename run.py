@@ -20,8 +20,8 @@ if __name__ == "__main__":
 	def get_customer(first_name, last_name):
 		return [i for i in bank.customers if i.first_name == first_name and i.last_name == last_name][0]
 
+	# Creating a central Bank object
 	bank = create_bank("Byte Bank", 0, [], [], [])
-	wait()
 	print("Welcome to {}!".format(bank.name))
 	wait()
 	stop = False
