@@ -2,7 +2,14 @@
 
 Byte Academy Weekend #2 project
 
-### Instructions
+TODO
+----
+Refactor code structure of the interactive prompt to make it more organized and streamlined.
+Add SQL database with SQLite back-end to store, manage, and manipulate user data.
+Implement password encryption/hashing using SHA512 so as to not store PII in plaintext.
+
+Instructions
+------------
 Week 2 weekend assignment - Classes, Objects, & Modules
 
 Think about a bank branch. Think about the customers, the kinds of accounts they have, how they can interact with their accounts and the branch, and so on.
