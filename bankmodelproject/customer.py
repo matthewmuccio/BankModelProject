@@ -1,18 +1,19 @@
-from bankmodelproject.person import Person
+from bankmodelproject.profile import Profile
 
 
-class Customer(Person):
-	def __init__(self, person, account):
-		super().__init__(person.first_name, person.last_name, person.sex, person.age, person.id, person.password)
+class Customer(Profile):
+	def __init__(self, profile, account):
+		super().__init__(profile.first_name, profile.last_name, profile.sex, profile.age, profile.username, profile.password)
 		self.account = account
 
 	def __str__(self):
-		first = "[ CUSTOMER ]".center(30, "-")
-		second = "First name: {}".format(self.first_name).center(30, " ")
-		third = "Last name: {}".format(self.last_name).center(30, " ")
-		fourth = "Sex: {}".format(self.sex).center(30, " ")
-		fifth = "Age: {}".format(self.age).center(30, " ")
-		sixth = "Username: {}".format(self.id).center(30, " ")
-		seventh = "Account: {}".format(self.account).center(30, " ")
-		last = "-".center(30, "-")
-		return "\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}".format(first, second, third, fourth, fifth, sixth, seventh, last)
+		title = "[ CUSTOMER ]".center(30, "-")
+		first_name = "First name: {0}".format(self.first_name).center(30, " ")
+		last_name = "Last name: {0}".format(self.last_name).center(30, " ")
+		sex = "Sex: {0}".format(self.sex).center(30, " ")
+		age = "Age: {0}".format(self.age).center(30, " ")
+		username = "Username: {0}".format(self.username).center(30, " ")
+		password = "Password: N/A".center(30, " ")
+		account = "Account: \n{0}".format(self.account).center(30, " ")
+		end = "-".center(30, "-")
+		return "\n{0}\n{1}\n{2}\n{3}\n{4}\n{5}\n{6}\n{7}\n{8}\n".format(title, first_name, last_name, sex, age, username, password, account, end)
