@@ -4,15 +4,15 @@
 import random
 import time
 
-from bankmodelproject import Account, Bank, Customer, Employee, Person
+from bankmodelproject import Account, Bank, Customer, Employee, Profile
 
 
 if __name__ == "__main__":
 	def wait():
 		time.sleep(1)
 
-	def create_bank(name, balance, profiles, customers, employees):
-		return Bank(name, balance, profiles, customers, employees)
+	def create_bank(name, balance):
+		return Bank(name, balance)
 
 	def generate_acc_number():
 		return "".join([str(random.randint(0,9)) for _ in range(10)])
@@ -21,7 +21,7 @@ if __name__ == "__main__":
 		return [i for i in bank.customers if i.first_name == first_name and i.last_name == last_name][0]
 
 	# Creating a central Bank object
-	bank = create_bank("Byte Bank", 0, [], [], [])
+	bank = create_bank("Byte Bank", 0)
 	print("Welcome to {}!".format(bank.name))
 	wait()
 	stop = False
@@ -55,10 +55,10 @@ if __name__ == "__main__":
 			print("Age (years):")
 			age = int(input())
 			print("Username:")
-			id = input()
+			username = input()
 			print("Password:")
 			password = input()
-			bank.create_profile(first_name, last_name, sex, age, id, password)
+			bank.create_profile(first_name, last_name, sex, age, username, password)
 			print(bank.profiles[0])
 			print("Profile created.")
 			print()
@@ -77,8 +77,6 @@ if __name__ == "__main__":
 				wait()
 				print("What type of account are you trying to open? (checking or savings)")
 				acc_type = input()
-				print("Which currency will you be using? (US, EURO, YEN, POUND, CA)")
-				currency = input()
 				print("Would you like to make an initial deposit? (0 for no, any other value for yes)")
 				balance = abs(int(input()))
 				print("Choose a pin number:")
@@ -86,9 +84,8 @@ if __name__ == "__main__":
 				acc_number = generate_acc_number()
 				print("We have assigned you an account number: {}".format(acc_number))
 				wait()
-				account = bank.create_account(acc_number, acc_type, balance, currency, pin_number)
+				account = bank.create_account(acc_number, acc_type, balance, pin_number)
 				bank.create_customer(bank.profiles[0], account)
-				bank.deposit(balance)
 				print(account)
 				print("Bank account created.")
 				wait()
@@ -118,12 +115,12 @@ if __name__ == "__main__":
 			print("Please enter your account credentials ...")
 			wait()
 			print("Username:")
-			id = input()
+			username = input()
 			print("Password:")
 			password = input()
 			print()
-			if id in bank.users:
-				if bank.users[id] == password:
+			if username in bank.users:
+				if bank.users[username] == password:
 					customer = get_customer(bank.profiles[0].first_name, bank.profiles[0].last_name)
 					print("Welcome back, {} {}!".format(bank.profiles[0].first_name, bank.profiles[0].last_name))
 					wait()
@@ -156,8 +153,7 @@ if __name__ == "__main__":
 						# Withdraw from account
 						print("How much would you like to withdraw?")
 						amount = int(input())
-						if customer.account.balance >= amount:
-							customer.account.withdraw(amount)
+						if customer.account.withdraw(amount):
 							bank.withdraw(amount)
 							print("Withdrew {} from your account.".format(amount))
 							print("Current balance: ${}".format(customer.account.balance))
