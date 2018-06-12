@@ -4,9 +4,10 @@ Byte Academy Weekend #2 project
 
 TODO
 ----
-Refactor code structure of the interactive prompt to make it more organized and streamlined.
-Add SQL database with SQLite back-end to store, manage, and manipulate user data.
-Implement password encryption/hashing using SHA512 so as to not store PII in plaintext.
+- [ ] Refactor code structure of the interactive prompt to make it more organized and streamlined.
+- [ ] Add SQL database with SQLite back-end to securely store, manage, and manipulate user data.
+- [x] Write password encryption/hashing function and username + password check function.
+- [ ] Implement password encryption/hashing using SHA512 so as to not store PII in plaintext, to the back-end.
 
 Instructions
 ------------
