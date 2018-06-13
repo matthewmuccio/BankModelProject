@@ -1,3 +1,6 @@
+import sqlite3
+import hashlib
+
 from bankmodelproject.account import Account
 from bankmodelproject.customer import Customer
 from bankmodelproject.employee import Employee
@@ -9,10 +12,21 @@ class Bank:
 		self.name = name
 		self.balance = balance
 
-	# TODO: Load profiles into database
 	def create_profile(self, first_name, last_name, sex, age, username, password):
-		p = Profile(first_name, last_name, sex, age, username, password)
-		return p
+		pw = self.encrypt_password(password)
+		connection = sqlite3.connect("master.db", check_same_thread=False)
+		cursor = connection.cursor()
+		cursor.execute(
+			"""INSERT INTO profiles(first_name, last_name, sex, age, username, password)
+			VALUES(?,?,?,?,?,?);""", (first_name, last_name, sex, age, username, pw)
+		)
+		connection.commit()
+		cursor.close()
+		connection.close()
+
+	# Encrypt a plaintext string (password) with SHA-512 cryptographic hash function.
+	def encrypt_password(self, password):
+		return hashlib.sha512(str.encode(password)).hexdigest()
 
 	def create_account(self, acc_number, acc_type, balance, pin_number):
 		a = Account(acc_number, acc_type, balance, pin_number)

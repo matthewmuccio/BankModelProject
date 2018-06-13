@@ -3,13 +3,14 @@
 
 import random
 import time
+import sqlite3
 
 from bankmodelproject import Account, Bank, Customer, Employee, Profile
 
 
 if __name__ == "__main__":
 	def wait():
-		time.sleep(1)
+		time.sleep(0.5)
 
 	def create_bank(name, balance):
 		return Bank(name, balance)
@@ -46,20 +47,19 @@ if __name__ == "__main__":
 			print("Thank you for taking the first step in joining Byte Bank.")
 			print("Create your Profile ...")
 			wait()
-			print("First name:")
+			print("First name (maximum: 50 characters):")
 			first_name = input()
-			print("Last name:")
+			print("Last name (maximum: 50 characters):")
 			last_name = input()
 			print("Sex (male/m, female/f, other/x):")
 			sex = input().lower()
 			print("Age (years):")
 			age = int(input())
-			print("Username:")
+			print("Username (maximum: 25 characters):")
 			username = input()
 			print("Password:")
 			password = input()
 			bank.create_profile(first_name, last_name, sex, age, username, password)
-			print(bank.profiles[0])
 			print("Profile created.")
 			print()
 			# Third question: open bank account or apply for job
