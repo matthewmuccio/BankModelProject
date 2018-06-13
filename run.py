@@ -10,16 +10,15 @@ from bankmodelproject import Account, Bank, Customer, Employee, Profile
 
 if __name__ == "__main__":
 	def wait():
-		time.sleep(0.5)
+		time.sleep(1)
 
 	def create_bank(name, balance):
 		return Bank(name, balance)
 
-	def generate_acc_number():
-		return "".join([str(random.randint(0,9)) for _ in range(10)])
-
 	def get_customer(first_name, last_name):
 		return [i for i in bank.customers if i.first_name == first_name and i.last_name == last_name][0]
+
+	print()
 
 	# Creating a central Bank object
 	bank = create_bank("Byte Bank", 0)
@@ -60,6 +59,7 @@ if __name__ == "__main__":
 			print("Password:")
 			password = input()
 			bank.create_profile(first_name, last_name, sex, age, username, password)
+			print(Profile(first_name, last_name, sex, age, username, password))
 			print("Profile created.")
 			print()
 			# Third question: open bank account or apply for job
@@ -85,7 +85,9 @@ if __name__ == "__main__":
 				print("We have assigned you an account number: {}".format(acc_number))
 				wait()
 				account = bank.create_account(acc_number, acc_type, balance, pin_number)
-				bank.create_customer(bank.profiles[0], account)
+				print("What is your username for your profile?")
+				username = input()
+				bank.create_customer(username, account)
 				print(account)
 				print("Bank account created.")
 				wait()
@@ -119,8 +121,8 @@ if __name__ == "__main__":
 			print("Password:")
 			password = input()
 			print()
-			if username in bank.users:
-				if bank.users[username] == password:
+			if is_in_database(username, password):
+				if password_is_correct(password):
 					customer = get_customer(bank.profiles[0].first_name, bank.profiles[0].last_name)
 					print("Welcome back, {} {}!".format(bank.profiles[0].first_name, bank.profiles[0].last_name))
 					wait()
