@@ -10,18 +10,14 @@ from bankmodelproject import Account, Bank, Customer, Employee, Profile
 
 if __name__ == "__main__":
 	def wait():
-		time.sleep(1)
+		time.sleep(0.25)
 
-	def create_bank(name, balance):
-		return Bank(name, balance)
-
+	# Remove this after implementing SQLite database support.
 	def get_customer(first_name, last_name):
 		return [i for i in bank.customers if i.first_name == first_name and i.last_name == last_name][0]
 
-	print()
-
 	# Creating a central Bank object
-	bank = create_bank("Byte Bank", 0)
+	bank = Bank("Byte Bank")
 	print("Welcome to {}!".format(bank.name))
 	wait()
 	stop = False
@@ -47,15 +43,15 @@ if __name__ == "__main__":
 			print("Create your Profile ...")
 			wait()
 			print("First name (maximum: 50 characters):")
-			first_name = input()
+			first_name = input().lower().capitalize()
 			print("Last name (maximum: 50 characters):")
-			last_name = input()
+			last_name = input().lower().capitalize()
 			print("Sex (male/m, female/f, other/x):")
 			sex = input().lower()
 			print("Age (years):")
 			age = int(input())
 			print("Username (maximum: 25 characters):")
-			username = input()
+			username = input().lower()
 			print("Password:")
 			password = input()
 			bank.create_profile(first_name, last_name, sex, age, username, password)
@@ -76,12 +72,12 @@ if __name__ == "__main__":
 				print("Open your bank account ...")
 				wait()
 				print("What type of account are you trying to open? (checking or savings)")
-				acc_type = input()
+				acc_type = input().lower()
 				print("Would you like to make an initial deposit? (0 for no, any other value for yes)")
 				balance = abs(int(input()))
-				print("Choose a pin number:")
+				print("Choose a pin number (must be a 4-digit number):")
 				pin_number = input()
-				acc_number = generate_acc_number()
+				acc_number = bank.generate_acc_number()
 				print("We have assigned you an account number: {}".format(acc_number))
 				wait()
 				account = bank.create_account(acc_number, acc_type, balance, pin_number)
