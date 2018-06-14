@@ -58,11 +58,14 @@ class Bank:
 		cursor.close()
 		connection.close()
 
-	def create_employee(self, profile, job, salary):
+	def create_employee(self, username, job, salary):
 		self.num_employees += 1
-		e = Employee(profile, job, salary)
+		username = username.lower()
 		connection = sqlite3.connect("master.db", check_same_thread=False)
 		cursor = connection.cursor()
+		cursor.execute("SELECT * FROM profiles WHERE username=?", (username,))
+		row = cursor.fetchall() # List of tuples (rows)
+		i, first_name, last_name, sex, age, username, password = row[0]
 		cursor.execute(
 			"""INSERT INTO employees(first_name, last_name, sex, age, username, password, job, salary)
 			VALUES(?,?,?,?,?,?,?,?);""", (first_name, last_name, sex, age, username, password, job, salary)
