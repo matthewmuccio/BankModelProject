@@ -1,3 +1,5 @@
+import sqlite3
+
 from bankmodelproject.profile import Profile
 
 
@@ -5,6 +7,15 @@ class Customer(Profile):
 	def __init__(self, profile, account):
 		super().__init__(profile.first_name, profile.last_name, profile.sex, profile.age, profile.username, profile.password)
 		self.account = account
+
+	# Deposits amount into the customer's account balance, and updates database table accordingly.
+	def deposit(self, amount):
+		self.account.deposit(amount)
+		connection = sqlite3.connect("master.db", check_same_thread=False)
+		cursor = connection.cursor()
+		cursor.execute("UPDATE customers SET balance=? WHERE username=?", (self.account.balance, self.username,))
+		cursor.close()
+		connection.close()
 
 	def __str__(self):
 		title = "[ CUSTOMER ]".center(30, "-")

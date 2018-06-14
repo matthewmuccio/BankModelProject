@@ -12,10 +12,6 @@ if __name__ == "__main__":
 	def wait():
 		time.sleep(0.25)
 
-	# Remove this after implementing SQLite database support.
-	def get_customer(first_name, last_name):
-		return [i for i in bank.customers if i.first_name == first_name and i.last_name == last_name][0]
-
 	# Creating a central Bank object
 	bank = Bank("Byte Bank")
 	print("Welcome to {}!".format(bank.name))
@@ -82,7 +78,7 @@ if __name__ == "__main__":
 				wait()
 				account = bank.create_account(acc_number, acc_type, balance, pin_number)
 				print("What is your username for your profile?")
-				username = input()
+				username = input().lower()
 				bank.create_customer(username, account)
 				print(account)
 				print("Bank account created.")
@@ -93,11 +89,11 @@ if __name__ == "__main__":
 				print("Apply for a Byte Bank job ...")
 				wait()
 				print("What job would you like?")
-				job = input()
+				job = input().lower().capitalize()
 				print("What salary ($ per hour) would you like?")
 				salary = int(input())
 				print("What is your username for your profile?")
-				username = input()
+				username = input().lower()
 				bank.create_employee(username, job, salary)
 				print("You applied for the job of {0}.".format(job))
 				wait()
@@ -114,14 +110,14 @@ if __name__ == "__main__":
 			print("Please enter your account credentials ...")
 			wait()
 			print("Username:")
-			username = input()
+			username = input().lower()
 			print("Password:")
 			password = input()
 			print()
-			if is_in_database(username, password):
-				if password_is_correct(password):
-					customer = get_customer(bank.profiles[0].first_name, bank.profiles[0].last_name)
-					print("Welcome back, {} {}!".format(bank.profiles[0].first_name, bank.profiles[0].last_name))
+			if bank.has_profile(username):
+				if bank.log_in(username, password):
+					customer = bank.get_customer(username)
+					print("Welcome back, {0} {1}!".format(customer.first_name, customer.last_name))
 					wait()
 					print("What would you like to do with your account?")
 					wait()
@@ -135,17 +131,15 @@ if __name__ == "__main__":
 					cmd2 = input()
 					if cmd2 == "1":
 						# Check account balance
-						print("Your account balance: {}".format(customer.account.balance))
+						print("Your account balance: ${0}".format(customer.account.balance))
 						wait()
 						print()
 					elif cmd2 == "2":
 						# Deposit into account
 						print("How much would you like to deposit?")
-						amount = int(input())
-						customer.account.deposit(amount)
-						bank.deposit(amount)
-						print("Deposited {} in your account.".format(amount))
-						print("Current balance: ${}".format(customer.account.balance))
+						amount = abs(int(input()))
+						bank.deposit(customer.username, amount)
+						print("Deposited ${0} in your account.".format(amount))
 						wait()
 						print()
 					elif cmd2 == "3":
@@ -174,9 +168,9 @@ if __name__ == "__main__":
 						wait()
 						print()
 				else:
-					print("Sorry, I could not find you in our database.")
+					print("The password you entered was incorrect.")
 			else:
-				print("Sorry, I could not find you in our database.")
+				print("Sorry, there is no profile with that username in our database.")
 				wait()
 		elif cmd == "3":
 			# Print string representation of the bank object
