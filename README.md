@@ -8,7 +8,7 @@ TODO
 - [ ] Implement error handling to catch exceptions that can arise, and validate and format user input.
 - [x] Refactor code in class files to remove unnecessary fields and methods, to prepare to set up database schema and storage.
 - [x] Add SQL database with SQLite back-end to securely store, manage, and manipulate user data.
-- [ ] Implement all sign up and log in (reading from and writing to database tables) functionality.
+- [x] Implement all sign up and log in (reading from and writing to database tables) functionality.
 - [x] Write password encryption/hashing function and username + password check function.
 - [x] Implement password encryption/hashing using SHA512 so as to not store PII in plaintext, to the back-end.
 
