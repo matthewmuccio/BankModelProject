@@ -176,13 +176,28 @@ class Bank:
 		id, first_name, last_name, sex, age, username, password, acc_number, acc_type, balance, pin_number = row[0]
 		new_balance = balance + amount
 		cursor.execute("UPDATE customers SET balance=? WHERE username=?", (new_balance, username,))
+		connection.commit()
 		cursor.close()
 		connection.close()
 		self.balance += amount
 
 	# Withdraws amount into the Bank's balance.
-	def withdraw(self, amount):
-		self.balance -= amount
+	def withdraw(self, username, user_balance, amount):
+		if user_balance - amount >= 0:
+			connection = sqlite3.connect("master.db", check_same_thread=False)
+			cursor = connection.cursor()
+			cursor.execute("SELECT * FROM customers WHERE username=?", (username,))
+			row = cursor.fetchall()
+			id, first_name, last_name, sex, age, username, password, acc_number, acc_type, balance, pin_number = row[0]
+			new_balance = balance - amount
+			cursor.execute("UPDATE customers SET balance=? WHERE username=?", (new_balance, username,))
+			connection.commit()
+			cursor.close()
+			connection.close()
+			self.balance -= amount
+			return True
+		else:
+			return False
 
 	# Prints the string representation of a Bank.
 	def __str__(self):
