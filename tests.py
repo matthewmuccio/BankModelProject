@@ -5,18 +5,34 @@ from bankmodelproject import Account, Bank, Customer, Employee, Profile
 
 
 if __name__ == "__main__":
-	account = Account("123456789", "checking", 100, "1234")
+	account = Account("123456789", "checking", 0, "1234")
 	bank = Bank("Matt's Bank")
 	bank.create_profile("Matthew", "Muccio", "male", 20, "matthewmuccio", "password")
 	bank.create_profile("Patrick", "Star", "male", 18, "pstar123", "123123")
 	bank.create_customer("matthewmuccio", account)
 	bank.create_employee("pstar123", "Teller", 15)
 
+	# Printing Account Bank objects (__str__)
 	print("Account object:")
 	print(account)
 
 	print("\nBank object:")
 	print(bank)
+
+	# Depositing to bank account
+	print(bank.get_customer("matthewmuccio"))
+	bank.deposit("matthewmuccio", 100)
+	print(bank.get_customer("matthewmuccio"))
+
+	# Withdrawing from bank account (has enough balance in account)
+	print(bank.get_customer("matthewmuccio"))
+	bank.withdraw("matthewmuccio", 100, 100)
+	print(bank.get_customer("matthewmuccio"))
+
+	# Withdrawing from bank account (does not have enough in account)
+	print(bank.get_customer("matthewmuccio"))
+	bank.withdraw("matthewmuccio", 0, 100)
+	print(bank.get_customer("matthewmuccio"))
 
 	print(bank.has_profile("matthewmuccio")) # True
 	print(bank.has_profile("pstar123")) # True

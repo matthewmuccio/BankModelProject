@@ -1,9 +1,8 @@
 #!/usr/bin/env python3
 
 
-import random
 import time
-import sqlite3
+import os
 
 from bankmodelproject import Account, Bank, Customer, Employee, Profile
 
@@ -35,6 +34,7 @@ if __name__ == "__main__":
 		print()
 		if cmd == "1":
 			# Second question: create profile
+			os.system("clear")
 			print("Thank you for taking the first step in joining Byte Bank.")
 			print("Create your Profile ...")
 			wait()
@@ -65,6 +65,7 @@ if __name__ == "__main__":
 			print()
 			if cmd2 == "1":
 				# Fourth question: open bank account
+				os.system("clear")
 				print("Open your bank account ...")
 				wait()
 				print("What type of account are you trying to open? (checking or savings)")
@@ -77,7 +78,7 @@ if __name__ == "__main__":
 				print("We have assigned you an account number: \n{}".format(acc_number))
 				wait()
 				account = bank.create_account(acc_number, acc_type, balance, pin_number)
-				print("What is your username for your profile?")
+				print("In order to connect your new bank account to your profile, provide your username:")
 				username = input().lower()
 				bank.create_customer(username, account)
 				print(account)
@@ -86,6 +87,7 @@ if __name__ == "__main__":
 				print()
 			elif cmd2 == "2":
 				# Fifth question: apply for job
+				os.system("clear")
 				print("Apply for a Byte Bank job ...")
 				wait()
 				print("What job would you like?")
@@ -107,6 +109,7 @@ if __name__ == "__main__":
 				print()
 		elif cmd == "2":
 			# Sign in to your bank account
+			os.system("clear")
 			print("Please enter your account credentials ...")
 			wait()
 			print("Username:")
@@ -116,10 +119,11 @@ if __name__ == "__main__":
 			print()
 			if bank.has_profile(username):
 				if bank.log_in(username, password):
+					os.system("clear")
 					customer = bank.get_customer(username)
 					print("Welcome back, {0} {1}!".format(customer.first_name, customer.last_name))
 					wait()
-					print("What would you like to do with your account?")
+					print("What would you like to do with your bank account?")
 					wait()
 					print("1: Check account balance.")
 					wait()
@@ -140,21 +144,21 @@ if __name__ == "__main__":
 						amount = abs(int(input()))
 						bank.deposit(customer.username, amount)
 						print("Deposited ${0} in your account.".format(amount))
+						print("Account balance: ${0}".format(customer.account.balance + amount))
 						wait()
 						print()
 					elif cmd2 == "3":
 						# Withdraw from account
 						print("How much would you like to withdraw?")
-						amount = int(input())
-						if customer.account.withdraw(amount):
-							bank.withdraw(amount)
-							print("Withdrew {} from your account.".format(amount))
-							print("Current balance: ${}".format(customer.account.balance))
+						amount = abs(int(input()))
+						if bank.withdraw(customer.username, customer.account.balance, amount):
+							print("Withdrew ${0} from your account.".format(amount))
+							print("Account balance: ${0}".format(customer.account.balance))
 							wait()
 							print()
 						else:
 							print("You do not have enough money in your account.")
-							print("Current balance: ${}".format(customer.account.balance))
+							print("Account balance: ${0}".format(customer.account.balance))
 							wait()
 							print()
 					elif cmd2 == "4":
@@ -168,11 +172,13 @@ if __name__ == "__main__":
 						wait()
 						print()
 				else:
-					print("The password you entered was incorrect.")
+					print("The password you entered was incorrect.\n")
+					wait()
 			else:
-				print("Sorry, there is no profile with that username in our database.")
+				print("Sorry, there is no profile with that username in our database.\n")
 				wait()
 		elif cmd == "3":
+			os.system("clear")
 			# Print string representation of the bank object
 			print("Here is some information about the bank ...")
 			print(bank)
