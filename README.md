@@ -4,8 +4,8 @@ Byte Academy Weekend #2 project
 
 TODO
 ----
-- [ ] Refactor code structure of the interactive prompt to make it more organized and streamlined.
 - [ ] Implement error handling to catch exceptions that can arise, and validate and format user input.
+- [x] Refactor code structure of the interactive prompt to make it more organized and streamlined.
 - [x] Refactor code in class files to remove unnecessary fields and methods, to prepare to set up database schema and storage.
 - [x] Add SQL database with SQLite back-end to securely store, manage, and manipulate user data.
 - [x] Implement all sign up and log in (reading from and writing to database tables) functionality.
